@@ -21,9 +21,12 @@ public class HistoryDatabase
         db.Insert(new HistoryFilm { Name = filmName });
     }
 
-    public List<HistoryFilm> GetAll()
+    public List<HistoryFilm> GetLastThree()
     {
-        return db.Table<HistoryFilm>().ToList();
+        return db.Table<HistoryFilm>()
+            .OrderByDescending(x => x.Id)
+            .Take(3)
+            .ToList();
     }
 
     public void Clear()
