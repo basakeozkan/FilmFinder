@@ -52,20 +52,7 @@
             <!-- sonuç -->
             <Label x:Name="ResultLabel"
                    FontSize="20" />
-
-            <!-- geçmiş -->
-            <Label Text="Geçmiş Öneriler"
-                   FontSize="16"
-                   FontAttributes="Bold"/>
-
-            <Label x:Name="HistoryLabel"
-                   FontSize="13"
-                   TextColor="Gray"/>
             
-            <Button Text="Geçmişi Temizle"
-                    BackgroundColor="#64c479"
-                    FontSize="14"
-                    Clicked="OnClearHistoryClicked"/>
 
         </VerticalStackLayout>
     </ScrollView>

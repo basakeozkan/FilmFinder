@@ -1,14 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="FilmFinder.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:FilmFinder"
-    Title="FilmFinder">
+    Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <Tab Title="Bana Film Bul">
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+        </Tab>
+
+        <Tab Title="Keşfet">
+            <ShellContent ContentTemplate="{DataTemplate local:FilmLibrary}" />
+        </Tab>
+        
+        <Tab Title="Geçmiş">
+            <ShellContent ContentTemplate="{DataTemplate local:HistoryPage}" />
+        </Tab>
+    </TabBar>
 
 </Shell>

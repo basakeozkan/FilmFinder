@@ -1,0 +1,25 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FilmFinder.HistoryPage"
+             Title="Geçmiş Öneriler">
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Label Text="En Son Önerilen Filmler" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+        
+        <CollectionView x:Name="HistoryList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,5" Padding="10" BackgroundColor="#f0f0f0">
+                        <Label Text="{Binding Name}" FontSize="16" />
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="Geçmişi Temizle" 
+                BackgroundColor="DarkRed" 
+                TextColor="White"
+                Clicked="OnClearHistoryClicked"
+                Margin="0,20"/>
+    </VerticalStackLayout>
+</ContentPage>

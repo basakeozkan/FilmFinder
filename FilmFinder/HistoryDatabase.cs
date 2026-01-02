@@ -1,4 +1,6 @@
 using SQLite;
+using System.Collections.Generic;
+using System.IO;
 
 namespace FilmFinder;
 
@@ -8,10 +10,7 @@ public class HistoryDatabase
 
     public HistoryDatabase()
     {
-        string path = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "history.db");
-
+        string path = Path.Combine(FileSystem.AppDataDirectory, "history.db");
         db = new SQLiteConnection(path);
         db.CreateTable<HistoryFilm>();
     }
@@ -21,11 +20,12 @@ public class HistoryDatabase
         db.Insert(new HistoryFilm { Name = filmName });
     }
 
-    public List<HistoryFilm> GetLastThree()
+    public List<HistoryFilm> GetLastNine()
     {
+        // Sadece son 9 kaydı tersten getirir
         return db.Table<HistoryFilm>()
             .OrderByDescending(x => x.Id)
-            .Take(3)
+            .Take(9)
             .ToList();
     }
 
