@@ -1,0 +1,68 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FilmFinder.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            
+            <Label Text="Tam şu an ne yapmak isterdin?" FontSize="18"/>
+            <Picker x:Name="MoodPicker" Title="Seçmek istemiyorum">
+                <Picker.Items>
+                    <x:String>Kahkaha atmak</x:String>
+                    <x:String>Heyecanlanmak</x:String>
+                    <x:String>Duygulanmak</x:String>
+                    <x:String>Kafa yormak</x:String>
+                    <x:String>Rahatlamak</x:String>
+                </Picker.Items>
+            </Picker>
+
+            
+            <Label Text="Tercih ettiğin bir tema var mı?" FontSize="18"/>
+            <Picker x:Name="ThemePicker" Title="Seçmek istemiyorum">
+                <Picker.Items>
+                    <x:String>Aşk</x:String>
+                    <x:String>Aile Draması</x:String>
+                    <x:String>Aksiyon</x:String>
+                    <x:String>Korku</x:String>
+                    <x:String>Polisiye</x:String>
+                </Picker.Items>
+            </Picker>
+
+           
+            <Label Text="Filmin süresi nasıl olmalı?" FontSize="18"/>
+            <Picker x:Name="LengthPicker" Title="Seçmek istemiyorum">
+                <Picker.Items>
+                    <x:String>Kısa</x:String>
+                    <x:String>Orta</x:String>
+                    <x:String>Uzun</x:String>
+                </Picker.Items>
+            </Picker>
+
+            
+            <Button Text="Bana Film Bul"
+                    Clicked="OnFindFilmClicked"/>
+
+           
+            <Label x:Name="ResultLabel"
+                   FontSize="20"
+                   TextColor="DarkRed"/>
+
+           
+            <Button Text="Geçmişi Temizle"
+                    BackgroundColor= "#555555"
+                    FontSize="14"
+                    Clicked="OnClearHistoryClicked"/>
+
+            <Label Text="Geçmiş Öneriler"
+                   FontSize="16"
+                   FontAttributes="Bold"/>
+
+            <Label x:Name="HistoryLabel"
+                   FontSize="13"
+                   TextColor="Gray"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
