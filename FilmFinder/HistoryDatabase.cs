@@ -20,12 +20,11 @@ public class HistoryDatabase
         db.Insert(new HistoryFilm { Name = filmName });
     }
 
-    public List<HistoryFilm> GetLastNine()
+    public List<HistoryFilm> GetLastFive()
     {
-        // Sadece son 9 kaydı tersten getirir
         return db.Table<HistoryFilm>()
             .OrderByDescending(x => x.Id)
-            .Take(9)
+            .Take(5)
             .ToList();
     }
 
@@ -40,4 +39,6 @@ public class HistoryFilm
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
     public string Name { get; set; }
+    [Ignore] 
+    public string ImagePath { get; set; }
 }

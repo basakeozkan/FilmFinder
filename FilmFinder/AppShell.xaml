@@ -6,15 +6,15 @@
     Shell.FlyoutBehavior="Disabled">
 
     <TabBar>
-        <Tab Title="Bana Film Bul">
+        <Tab Title="Bana Film Bul" Icon="findme.png">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
         </Tab>
 
-        <Tab Title="Keşfet">
+        <Tab Title="Keşfet"  Icon="film.png">
             <ShellContent ContentTemplate="{DataTemplate local:FilmLibrary}" />
         </Tab>
         
-        <Tab Title="Geçmiş">
+        <Tab Title="Geçmiş" Icon="history.png">
             <ShellContent ContentTemplate="{DataTemplate local:HistoryPage}" />
         </Tab>
     </TabBar>

@@ -11,25 +11,47 @@
                FontSize="24" 
                FontAttributes="Bold" 
                Margin="20,10" 
-               HorizontalOptions="Center"/>
+               HorizontalOptions="Center"
+               TextColor="#64c479"/>
 
         <CollectionView Grid.Row="1" 
                         x:Name="LibraryList" 
-                        Margin="10"
-                        VerticalScrollBarVisibility="Always"> <CollectionView.ItemTemplate>
+                        Margin="5"
+                        VerticalScrollBarVisibility="Always">
+            
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="3" 
+                                 HorizontalItemSpacing="5" 
+                                 VerticalItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="5" Padding="15" CornerRadius="10" BorderColor="#D1D1D1">
-                        <VerticalStackLayout Spacing="5">
-                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
-                            <HorizontalStackLayout Spacing="10">
-                                <Label Text="{Binding Mood}" FontSize="13" TextColor="Gray"/>
-                                <Label Text="|" TextColor="LightGray"/>
-                                <Label Text="{Binding Theme}" FontSize="13" TextColor="Gray"/>
-                                <Label Text="|" TextColor="LightGray"/>
-                                <Label Text="{Binding Length}" FontSize="13" TextColor="Gray"/>
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
-                    </Frame>
+                    <VerticalStackLayout Spacing="5" Padding="5">
+                        
+                        <Frame CornerRadius="8" 
+                               Padding="0" 
+                               IsClippedToBounds="True" 
+                               HasShadow="True"
+                               BorderColor="Transparent"
+                               HeightRequest="160">
+                            <Image Source="{Binding ImagePath}" 
+                                   Aspect="AspectFill"
+                                   VerticalOptions="FillAndExpand" 
+                                   HorizontalOptions="FillAndExpand"/>
+                        </Frame>
+
+                        <Label Text="{Binding Name}" 
+                               FontSize="12" 
+                               FontAttributes="Bold" 
+                               TextColor="Black"
+                               HorizontalTextAlignment="Center"
+                               MaxLines="2"
+                               LineBreakMode="TailTruncation"
+                               HeightRequest="35"/>
+                        
+
+                    </VerticalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

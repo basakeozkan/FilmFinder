@@ -17,8 +17,20 @@ public partial class HistoryPage : ContentPage
 
     void LoadHistory()
     {
-        // Son 9 filmi çekiyoruz
-        var history = historyDb.GetLastNine();
+        var history = historyDb.GetLastFive();
+
+        if (history != null && history.Any())
+        {
+            foreach (var film in history)
+            {
+                film.ImagePath = film.Name.Replace("'", "")
+                    .Replace(" ", "")
+                    .Replace(":", "")
+                    .ToLower(System.Globalization.CultureInfo.InvariantCulture)
+                    .Replace("ı", "i") + ".jpg";
+            }
+        }
+        
         HistoryList.ItemsSource = null;
         HistoryList.ItemsSource = history;
     }

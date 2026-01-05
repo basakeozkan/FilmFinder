@@ -1,60 +1,74 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FilmFinder.MainPage">
+             x:Class="FilmFinder.MainPage"
+             Title= "Anasayfa">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
-            
-            
-            <Image
-                Source="logo.png"
-                HorizontalOptions="Center"
-                WidthRequest="250"
-                HeightRequest="150"
-                Margin="0,10"/>
-            
-            <Frame CornerRadius="10" Padding="15" Margin="10" BackgroundColor="#f8f8f8" BorderColor="#cccccc">
-                <StackLayout Spacing="10">
-                    <Label x:Name="QuestionLabel" Text="" FontSize="18"/>
-                    <Picker x:Name="AnswerPicker" 
-                            Title="Seçmek istemiyorum"
-                            SelectedIndexChanged="OnAnswerPickerSelectedIndexChanged"/>
-                </StackLayout>
-            </Frame>
+        <VerticalStackLayout Padding="15" Spacing="15">
+    
+            <Image Source="logo.png" HorizontalOptions="Center" WidthRequest="150" HeightRequest="90" Margin="0,10"/>
 
-            <Grid ColumnSpacing="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+    <VerticalStackLayout x:Name="QuestionsPanel" Spacing="15">
+        
+        <Label Text="Aradığın filmi bulman için doğru adres!" 
+               FontSize="30" 
+               TextColor="#64c479" 
+               FontAttributes="Bold"
+               HorizontalTextAlignment="Center"
+               HorizontalOptions="Center" 
+               Margin="0,0,0,15"/>
+        
+        <Frame CornerRadius="10" Padding="15" BackgroundColor="#f8f8f8" BorderColor="#cccccc">
+            <StackLayout Spacing="10">
+                <Label x:Name="QuestionLabel" Text="" FontSize="18"/>
+                <Picker x:Name="AnswerPicker" Title="Seçmek istemiyorum" SelectedIndexChanged="OnAnswerPickerSelectedIndexChanged"/>
+            </StackLayout>
+        </Frame>
 
-                <!-- ok butonları --> 
-                <Button Text="‹" FontSize="20" WidthRequest="40" HeightRequest="40"
-                        BackgroundColor="#64c479" TextColor="White"
-                        Grid.Column="0"
-                        Clicked="OnPreviousQuestionClicked"/>
+        <Grid ColumnSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="PreviousButton" 
+                    Text="‹" 
+                    FontSize="20" 
+                    WidthRequest="40" 
+                    HeightRequest="40"
+                    BackgroundColor="#64c479" 
+                    TextColor="White"
+                    Grid.Column="0"
+                    Clicked="OnPreviousQuestionClicked"/>
+            <Button x:Name="NextButton" 
+                    Text="›" 
+                    FontSize="20" 
+                    WidthRequest="40" 
+                    HeightRequest="40"
+                    BackgroundColor="#64c479" 
+                    TextColor="White"
+                    Grid.Column="2"
+                    Clicked="OnNextQuestionClicked"/>
+        </Grid>
 
-                <BoxView Grid.Column="1" BackgroundColor="Transparent"/> 
+        <Button x:Name="FindFilmButton" Text="Bana Film Bul" Clicked="OnFindFilmClicked" BackgroundColor="#64c479"/>
+    </VerticalStackLayout>
 
-                <Button Text="›" FontSize="20" WidthRequest="40" HeightRequest="40"
-                        BackgroundColor="#64c479" TextColor="White"
-                        Grid.Column="2"
-                        Clicked="OnNextQuestionClicked"/>
-            </Grid>
+    <VerticalStackLayout x:Name="ResultPanel" IsVisible="False" Spacing="20">
+        <Frame CornerRadius="15" Padding="0" IsClippedToBounds="True" HorizontalOptions="Center" 
+               HeightRequest="300" WidthRequest="185" BorderColor="#64c479" HasShadow="True">
+            <Image x:Name="FilmPoster" HeightRequest="300" WidthRequest="185" Aspect="AspectFill" />
+        </Frame>
+        
+        <Label x:Name="ResultLabel" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="Black" />
 
-            
-
-            <!-- film bul butonu -->
-            <Button Text="Bana Film Bul"
-                    Clicked="OnFindFilmClicked"/>
-
-            <!-- sonuç -->
-            <Label x:Name="ResultLabel"
-                   FontSize="20" />
-            
-
+        <VerticalStackLayout Spacing="10">
+            <Button Text="Yeni Öneri" Clicked="OnFindFilmClicked" BackgroundColor="#64c479" TextColor="White" />
+            <Button Text="Seçimleri Değiştir" Clicked="OnResetClicked" BackgroundColor="#808080" TextColor="White" />
         </VerticalStackLayout>
+    </VerticalStackLayout>
+
+</VerticalStackLayout>
     </ScrollView>
 
 </ContentPage>
