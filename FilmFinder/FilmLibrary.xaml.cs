@@ -9,65 +9,59 @@ public partial class FilmLibrary : ContentPage
     {
         InitializeComponent();
 
-        // filmler
-        var allFilms = new List<Film>
-        {
-             new Film { Name = "La La Land", Mood = "Duygulanmak", Theme = "Aşk", Length = "Uzun" },
-            new Film { Name = "Leon: The Professional", Mood = "Duygulanmak", Theme = "Aksiyon", Length = "Orta" },
-            new Film { Name = "Mystic River", Mood = "Duygulanmak", Theme = "Polisiye", Length = "Uzun" },
-            new Film { Name = "Carrie", Mood = "Duygulanmak", Theme = "Korku", Length = "Orta" },
-            new Film { Name = "Little Miss Sunshine", Mood = "Duygulanmak", Theme = "Aile Draması", Length = "Orta" },
-            new Film { Name = "Lady Bird", Mood = "Duygulanmak", Theme = "Gençlik", Length = "Orta" },
-            new Film { Name = "Kill Bill", Mood = "Heyecanlanmak", Theme = "Aksiyon", Length = "Orta" },
-            new Film { Name = "Seven", Mood = "Heyecanlanmak", Theme = "Polisiye", Length = "Uzun" },
-            new Film { Name = "Nerve", Mood = "Heyecanlanmak", Theme = "Gençlik", Length = "Orta" },
-            new Film { Name = "The Notebook", Mood = "Heyecanlanmak", Theme = "Aşk", Length = "Uzun" },
-            new Film { Name = "The impossible", Mood = "Heyecanlanmak", Theme = "Aile Draması", Length = "Orta" },
-            new Film { Name = "Dont Breathe", Mood = "Heyecanlanmak", Theme = "Korku", Length = "Kısa" },
-            new Film { Name = "Scary Movie", Mood = "Kahkaha atmak", Theme = "Korku", Length = "Kısa" },
-            new Film { Name = "The Nice Guys", Mood = "Kahkaha atmak", Theme = "Polisiye", Length = "Orta" },
-            new Film { Name = "How To Lose a Guy in Ten Days", Mood = "Kahkaha atmak", Theme = "Aşk", Length = "Orta" },
-            new Film { Name = "Deadpool", Mood = "Kahkaha atmak", Theme = "Aksiyon", Length = "Orta" },
-            new Film { Name = "Aile Arasinda", Mood = "Kahkaha atmak", Theme = "Aile Draması", Length = "Orta" },
-            new Film { Name = "Superbad", Mood = "Kahkaha atmak", Theme = "Gençlik", Length = "Orta" },
-            new Film { Name = "We Need to Talk About Kevin", Mood = "Kafa yormak", Theme = "Aile Draması", Length = "Orta" },
-            new Film { Name = "Before Sunrise", Mood = "Kafa yormak", Theme = "Aşk", Length = "Kısa" },
-            new Film { Name = "Fight Club", Mood = "Kafa yormak", Theme = "Aksiyon", Length = "Uzun" },
-            new Film { Name = "Lost Highway", Mood = "Kafa yormak", Theme = "Korku", Length = "Uzun" },
-            new Film { Name = "Donnie Darko", Mood = "Kafa yormak", Theme = "Gençlik", Length = "Orta" },
-            new Film { Name = "Shutter island", Mood = "Kafa yormak", Theme = "Polisiye", Length = "Uzun" },
-            new Film { Name = "Clueless", Mood = "Rahatlamak", Theme = "Gençlik", Length = "Orta" },
-            new Film { Name = "Ten Things I Hate About You", Mood = "Rahatlamak", Theme = "Aşk", Length = "Orta" },
-            new Film { Name = "The Parent Trap", Mood = "Rahatlamak", Theme = "Aile Draması", Length = "Uzun" },
-            new Film { Name = "Guardians of the Galaxy", Mood = "Rahatlamak", Theme = "Aksiyon", Length = "Uzun" },
-            new Film { Name = "Knives Out", Mood = "Rahatlamak", Theme = "Polisiye", Length = "Uzun" },
-            new Film { Name = "Coraline", Mood = "Rahatlamak", Theme = "Korku", Length = "Orta" }
-        };
+        LibraryList.ItemsSource = MovieService.AllFilms.OrderBy(x => x.Name).ToList();
+    }
+    
+    Film _currentSelectedFilm;
+    
+    async void OnFilmTapped(object sender, EventArgs e)
+    {
+        var button = sender as Button;
+        var film = button?.CommandParameter as Film;
+        if (film == null) return;
 
+        _currentSelectedFilm = film;
+
+        DetailName.Text = film.Name;
+        DetailMood.Text = film.DisplayMood;
+        DetailTheme.Text = film.Theme;
+        DetailTime.Text = film.LengthforLibrary;
+        FilmPoster.Source = film.ImagePath;
+
+        bool isWatched = Preferences.Get(film.Name + "_watched", false);
+        WatchStatusBtn.Source = isWatched ? "watched.png" : "unwatched.png";
+
+        DetailPanel.IsVisible = true;
+        DetailPanel.Scale = 0.5; 
+        DetailPanel.Opacity = 0;
+        BackgroundOverlay.IsVisible = true;
+        await Task.Delay(30);
+        await Task.WhenAll(
+            BackgroundOverlay.FadeTo(0.6, 250),
+            DetailPanel.FadeTo(1, 150), 
+            DetailPanel.ScaleTo(1.0, 250, Easing.SpringOut)
+        );
+    }
+
+    async void OnCloseDetailClicked(object sender, EventArgs e)
+    {
+        await DetailPanel.ScaleTo(0.5, 200, Easing.SpringIn);
+        DetailPanel.IsVisible = false;
+        await BackgroundOverlay.FadeTo(0, 250); 
+        BackgroundOverlay.IsVisible = false;
+        LibraryList.ItemsSource = null;
+        LibraryList.ItemsSource = MovieService.AllFilms.OrderBy(x => x.Name).ToList();
+    }
+
+    void OnWatchStatusClicked(object sender, EventArgs e)
+    {
+        if (_currentSelectedFilm == null) return;
         
-        var displayList = allFilms.Select(f => new Film 
-        {
-            Name = f.Name,
-            Theme = f.Theme,
-            // değişim
-            Mood = f.Mood == "Kahkaha atmak" ? "Eğlenceli" : 
-                   f.Mood == "Duygulanmak" ? "Duygu Dolu" : 
-                   f.Mood == "Heyecanlanmak" ? "Dinamik" : 
-                   f.Mood == "Kafa yormak" ? "Psikolojik" :
-                   f.Mood == "Rahatlamak" ? "Çerezlik" : f.Mood,
-            
-            Length = f.Length == "Kısa" ? "<= 90 dk" :
-                f.Length == "Orta" ? "90 - 120 dk" :
-                f.Length == "Uzun" ? ">= 120 dk" : f.Length,
-                
-            ImagePath = f.Name.Replace("'", "")
-                .Replace(" ", "")
-                .ToLower(System.Globalization.CultureInfo.InvariantCulture)
-            .Replace("ı", "i") + ".jpg"
-                   
-                   
-        }).OrderBy(x => x.Name).ToList();
+        bool isWatched = Preferences.Get(_currentSelectedFilm.Name + "_watched", false);
         
-        LibraryList.ItemsSource = displayList;
+        bool newStatus = !isWatched;
+        Preferences.Set(_currentSelectedFilm.Name + "_watched", newStatus);
+        
+        WatchStatusBtn.Source = newStatus ? "watched.png" : "unwatched.png";
     }
 }

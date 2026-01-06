@@ -20,11 +20,11 @@ public class HistoryDatabase
         db.Insert(new HistoryFilm { Name = filmName });
     }
 
-    public List<HistoryFilm> GetLastFive()
+    public List<HistoryFilm> GetLastFour()
     {
         return db.Table<HistoryFilm>()
             .OrderByDescending(x => x.Id)
-            .Take(5)
+            .Take(4)
             .ToList();
     }
 

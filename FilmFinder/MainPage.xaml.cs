@@ -9,53 +9,20 @@ public partial class MainPage : ContentPage
 {
     HistoryDatabase historyDb = new HistoryDatabase();
     List<Film> films;
-    string lastSuggestedFilm = null;
     int currentQuestionIndex = 0;
     public ObservableCollection<Question> Questions { get; set; }
 
     public MainPage()
     {
         InitializeComponent();
-
-        films = new List<Film>
-        {
-                new Film { Name = "La La Land", Mood = "Duygulanmak", Theme = "Aşk", Length = "Uzun" },
-            new Film { Name = "Léon: The Professional", Mood = "Duygulanmak", Theme = "Aksiyon", Length = "Orta" },
-            new Film { Name = "Mystic River", Mood = "Duygulanmak", Theme = "Polisiye", Length = "Uzun" },
-            new Film { Name = "Carrie", Mood = "Duygulanmak", Theme = "Korku", Length = "Orta" },
-            new Film { Name = "Little Miss Sunshine", Mood = "Duygulanmak", Theme = "Aile Draması", Length = "Orta" },
-            new Film { Name = "Lady Bird", Mood = "Duygulanmak", Theme = "Gençlik", Length = "Orta" },
-            new Film { Name = "Kill Bill", Mood = "Heyecanlanmak", Theme = "Aksiyon", Length = "Orta" },
-            new Film { Name = "Seven", Mood = "Heyecanlanmak", Theme = "Polisiye", Length = "Uzun" },
-            new Film { Name = "Nerve", Mood = "Heyecanlanmak", Theme = "Gençlik", Length = "Orta" },
-            new Film { Name = "The Notebook", Mood = "Heyecanlanmak", Theme = "Aşk", Length = "Uzun" },
-            new Film { Name = "The Impossible", Mood = "Heyecanlanmak", Theme = "Aile Draması", Length = "Orta" },
-            new Film { Name = "Don't Breathe", Mood = "Heyecanlanmak", Theme = "Korku", Length = "Kısa" },
-            new Film { Name = "Scary Movie", Mood = "Kahkaha atmak", Theme = "Korku", Length = "Kısa" },
-            new Film { Name = "The Nice Guys", Mood = "Kahkaha atmak", Theme = "Polisiye", Length = "Orta" },
-            new Film { Name = "How To Lose a Guy in Ten Days", Mood = "Kahkaha atmak", Theme = "Aşk", Length = "Orta" },
-            new Film { Name = "Deadpool", Mood = "Kahkaha atmak", Theme = "Aksiyon", Length = "Orta" },
-            new Film { Name = "Aile Arasında", Mood = "Kahkaha atmak", Theme = "Aile Draması", Length = "Orta" },
-            new Film { Name = "Superbad", Mood = "Kahkaha atmak", Theme = "Gençlik", Length = "Orta" },
-            new Film { Name = "We Need to Talk About Kevin", Mood = "Kafa yormak", Theme = "Aile Draması", Length = "Orta" },
-            new Film { Name = "Before Sunrise", Mood = "Kafa yormak", Theme = "Aşk", Length = "Kısa" },
-            new Film { Name = "Fight Club", Mood = "Kafa yormak", Theme = "Aksiyon", Length = "Uzun" },
-            new Film { Name = "Lost Highway", Mood = "Kafa yormak", Theme = "Korku", Length = "Uzun" },
-            new Film { Name = "Donnie Darko", Mood = "Kafa yormak", Theme = "Gençlik", Length = "Orta" },
-            new Film { Name = "Shutter Island", Mood = "Kafa yormak", Theme = "Polisiye", Length = "Uzun" },
-            new Film { Name = "Clueless", Mood = "Rahatlamak", Theme = "Gençlik", Length = "Orta" },
-            new Film { Name = "Ten Things I Hate About You", Mood = "Rahatlamak", Theme = "Aşk", Length = "Orta" },
-            new Film { Name = "The Parent Trap", Mood = "Rahatlamak", Theme = "Aile Draması", Length = "Uzun" },
-            new Film { Name = "Guardians of the Galaxy", Mood = "Rahatlamak", Theme = "Aksiyon", Length = "Uzun" },
-            new Film { Name = "Knives Out", Mood = "Rahatlamak", Theme = "Polisiye", Length = "Uzun" },
-            new Film { Name = "Coraline", Mood = "Rahatlamak", Theme = "Korku", Length = "Orta" }
-        };
-
+        
+        films = MovieService.AllFilms;
+        
         Questions = new ObservableCollection<Question>
         {
-            new Question { QuestionText = "Tam şu an ne yapmak isterdin?", Options = new List<string> { "Kahkaha atmak", "Heyecanlanmak", "Duygulanmak", "Kafa yormak" } },
-            new Question { QuestionText = "Tercih ettiğin bir tema var mı?", Options = new List<string> { "Aşk", "Aile Draması", "Gençlik", "Aksiyon", "Korku", "Polisiye" } },
-            new Question { QuestionText = "Filmin süresi nasıl olmalı?", Options = new List<string> { "Kısa", "Orta", "Uzun" } }
+            new Question { QuestionText = "Bugün neye ihtiyacın var?", Options = new List<string> { "Kahkaha atmak", "Heyecanlanmak", "Duygulanmak", "Kafa yormak", "Rahatlamak" } },
+            new Question { QuestionText = "Şu anda hangi tema sana hitap ediyor?", Options = new List<string> { "Aşk", "Aile Draması", "Gençlik", "Aksiyon", "Korku", "Polisiye" } },
+            new Question { QuestionText = "Hızlıca izlemelik mi, yoksa uzun soluklu bir film mi tercihin?", Options = new List<string> { "Kısa", "Orta", "Uzun" } }
         };
 
         BindingContext = this;
@@ -69,12 +36,9 @@ public partial class MainPage : ContentPage
         var question = Questions[currentQuestionIndex];
         QuestionLabel.Text = question.QuestionText;
         
-        PreviousButton.IsEnabled = (currentQuestionIndex > 0);
-        PreviousButton.BackgroundColor = PreviousButton.IsEnabled ? Color.FromArgb("#64c479") : Color.FromArgb("#a6a6a6");
-
+        PreviousButton.IsVisible = (currentQuestionIndex > 0);
        
-        NextButton.IsEnabled = (currentQuestionIndex < Questions.Count - 1);
-        NextButton.BackgroundColor = NextButton.IsEnabled ? Color.FromArgb("#64c479") : Color.FromArgb("#a6a6a6");
+        NextButton.IsVisible = (currentQuestionIndex < Questions.Count - 1);
         
         AnswerPicker.SelectedIndexChanged -= OnAnswerPickerSelectedIndexChanged;
         AnswerPicker.ItemsSource = null;
@@ -105,34 +69,28 @@ public partial class MainPage : ContentPage
             bool match = true;
             if (!string.IsNullOrEmpty(sMood) && film.Mood != sMood) match = false;
             if (!string.IsNullOrEmpty(sTheme) && film.Theme != sTheme) match = false;
-            if (!string.IsNullOrEmpty(sLength) && film.Length != sLength) match = false;
+            if (!string.IsNullOrEmpty(sLength) && film.LengthforMain != sLength) match = false;
+            if (Preferences.Get(film.Name + "_watched", false)) match = false;
             if (match) matchedFilms.Add(film);
         }
 
         if (matchedFilms.Count > 0)
         {
             Random rnd = new Random();
-            string selectedFilm = matchedFilms[rnd.Next(matchedFilms.Count)].Name;
+            var selectedFilm = matchedFilms[rnd.Next(matchedFilms.Count)];
             
         
             // yazı
-            ResultLabel.Text = selectedFilm;
-
-            // görselin aktarılması
-            string imageName = selectedFilm.Replace("'", "")
-                .Replace(" ", "")
-                .Replace("é", "")
-                .Replace(":", "")
-                .Replace("ı", "i")
-                .ToLower(System.Globalization.CultureInfo.InvariantCulture) + ".jpg";
-            FilmPoster.Source = imageName;
+            ResultLabel.Text = selectedFilm.Name;
+            
+            FilmPoster.Source = selectedFilm.ImagePath;
 
             // ekran değişimi
             QuestionsPanel.IsVisible = false;
             ResultPanel.IsVisible = true;
 
             // historye kaydet
-            historyDb.Add(selectedFilm);
+            historyDb.Add(selectedFilm.Name);
         }
         else 
         { 
@@ -154,4 +112,3 @@ public partial class MainPage : ContentPage
 }
 
 public class Question { public string QuestionText { get; set; } public List<string> Options { get; set; } public string SelectedOption { get; set; } }
-public class Film { public string Name { get; set; } public string Mood { get; set; } public string Theme { get; set; } public string Length { get; set; } public string ImagePath { get; set; }}

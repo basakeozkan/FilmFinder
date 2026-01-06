@@ -1,74 +1,107 @@
-﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FilmFinder.MainPage"
-             Title= "Anasayfa">
-
-    <ScrollView>
-        <VerticalStackLayout Padding="15" Spacing="15">
+             Title="Anasayfa">
     
-            <Image Source="logo.png" HorizontalOptions="Center" WidthRequest="150" HeightRequest="90" Margin="0,10"/>
-
-    <VerticalStackLayout x:Name="QuestionsPanel" Spacing="15">
-        
-        <Label Text="Aradığın filmi bulman için doğru adres!" 
-               FontSize="30" 
-               TextColor="#64c479" 
-               FontAttributes="Bold"
-               HorizontalTextAlignment="Center"
-               HorizontalOptions="Center" 
-               Margin="0,0,0,15"/>
-        
-        <Frame CornerRadius="10" Padding="15" BackgroundColor="#f8f8f8" BorderColor="#cccccc">
-            <StackLayout Spacing="10">
-                <Label x:Name="QuestionLabel" Text="" FontSize="18"/>
-                <Picker x:Name="AnswerPicker" Title="Seçmek istemiyorum" SelectedIndexChanged="OnAnswerPickerSelectedIndexChanged"/>
-            </StackLayout>
-        </Frame>
-
-        <Grid ColumnSpacing="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="PreviousButton" 
-                    Text="‹" 
-                    FontSize="20" 
-                    WidthRequest="40" 
-                    HeightRequest="40"
-                    BackgroundColor="#64c479" 
-                    TextColor="White"
-                    Grid.Column="0"
-                    Clicked="OnPreviousQuestionClicked"/>
-            <Button x:Name="NextButton" 
-                    Text="›" 
-                    FontSize="20" 
-                    WidthRequest="40" 
-                    HeightRequest="40"
-                    BackgroundColor="#64c479" 
-                    TextColor="White"
-                    Grid.Column="2"
-                    Clicked="OnNextQuestionClicked"/>
+    <Shell.TitleView>
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+            <Image Source="logo.png" 
+                   HeightRequest="60"  
+                   WidthRequest="100"
+                   Aspect="AspectFit"
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center" />
         </Grid>
+    </Shell.TitleView>
 
-        <Button x:Name="FindFilmButton" Text="Bana Film Bul" Clicked="OnFindFilmClicked" BackgroundColor="#64c479"/>
-    </VerticalStackLayout>
-
-    <VerticalStackLayout x:Name="ResultPanel" IsVisible="False" Spacing="20">
-        <Frame CornerRadius="15" Padding="0" IsClippedToBounds="True" HorizontalOptions="Center" 
-               HeightRequest="300" WidthRequest="185" BorderColor="#64c479" HasShadow="True">
-            <Image x:Name="FilmPoster" HeightRequest="300" WidthRequest="185" Aspect="AspectFill" />
-        </Frame>
+    <ScrollView VerticalScrollBarVisibility="Never">
         
-        <Label x:Name="ResultLabel" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="Black" />
+        <Grid VerticalOptions="FillAndExpand" MinimumHeightRequest="600" Padding="15">
+            
+            <VerticalStackLayout VerticalOptions="Center" Spacing="20">
+                
+                <VerticalStackLayout x:Name="QuestionsPanel" Spacing="15" IsVisible="True">
+                    <Image Source="pixelmovie.gif"
+                           IsAnimationPlaying="True"
+                           WidthRequest="150"
+                           HeightRequest="150"
+                           HorizontalOptions="Center" />
+                
+                    <Frame CornerRadius="12" Padding="15" BackgroundColor="White" BorderColor="#f1edfa" HasShadow="True">
+                        <Grid RowDefinitions="60, 55, 50" RowSpacing="15">
+                            <Label x:Name="QuestionLabel" 
+                                   VerticalTextAlignment="Center" 
+                                   HorizontalTextAlignment="Center" 
+                                   Text="" 
+                                   FontSize="18" 
+                                   Grid.Row="0"
+                                   TextColor="Black"
+                                   MaxLines="2"/>
 
-        <VerticalStackLayout Spacing="10">
-            <Button Text="Yeni Öneri" Clicked="OnFindFilmClicked" BackgroundColor="#64c479" TextColor="White" />
-            <Button Text="Seçimleri Değiştir" Clicked="OnResetClicked" BackgroundColor="#808080" TextColor="White" />
-        </VerticalStackLayout>
-    </VerticalStackLayout>
+                            <Picker x:Name="AnswerPicker" 
+                                    Grid.Row="1" 
+                                    Title="Seçmek istemiyorum" 
+                                    BackgroundColor="#f2f0f7" 
+                                    TextColor="#6509b5" 
+                                    TitleColor="#a6a6a6"
+                                    HorizontalTextAlignment="Center"
+                                    SelectedIndexChanged="OnAnswerPickerSelectedIndexChanged"/>
+                
+                            <Grid ColumnSpacing="15" Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Button x:Name="PreviousButton" Text="‹" FontSize="22" WidthRequest="45" HeightRequest="45" TextColor="White" Grid.Column="0" Clicked="OnPreviousQuestionClicked" CornerRadius="22">
+                                    <Button.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Color="#6509b5" Offset="0.0" />
+                                            <GradientStop Color="#282e9c" Offset="1.0" />
+                                        </LinearGradientBrush>
+                                    </Button.Background>
+                                </Button>
+                    
+                                <Button x:Name="NextButton" Text="›" FontSize="22" WidthRequest="45" HeightRequest="45" TextColor="White" Grid.Column="2" Clicked="OnNextQuestionClicked" CornerRadius="22">
+                                    <Button.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Color="#6509b5" Offset="0.0" />
+                                            <GradientStop Color="#282e9c" Offset="1.0" />
+                                        </LinearGradientBrush>
+                                    </Button.Background>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Frame>
 
-</VerticalStackLayout>
+                    <Button x:Name="FindFilmButton" Text="Bana Film Bul" HeightRequest="55" FontSize="18" CornerRadius="12" Clicked="OnFindFilmClicked"> 
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#6509b5" Offset="0.0" />
+                                <GradientStop Color="#282e9c" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout x:Name="ResultPanel" IsVisible="False" Spacing="25" HorizontalOptions="Center" MaximumWidthRequest="500">
+                    
+                    <Frame CornerRadius="20" Padding="0" IsClippedToBounds="True" HorizontalOptions="Center" 
+                           HeightRequest="380" WidthRequest="240" BorderColor="#6509b5" HasShadow="True">
+                        <Image x:Name="FilmPoster" Aspect="AspectFill" />
+                    </Frame>
+            
+                    <Label x:Name="ResultLabel" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="Black" />
+
+                    <VerticalStackLayout Spacing="12" WidthRequest="280" HorizontalOptions="Center">
+                        <Button Text="Yeni Öneri" Clicked="OnFindFilmClicked" BackgroundColor="#6509b5" TextColor="White" HeightRequest="55" CornerRadius="12" FontSize="17"/>
+                        <Button Text="Seçimleri Değiştir" Clicked="OnResetClicked" BackgroundColor="#282e9c" TextColor="White" HeightRequest="55" CornerRadius="12" FontSize="17"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </Grid>
     </ScrollView>
-
 </ContentPage>
