@@ -12,21 +12,21 @@
             
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" 
-                                 Span="{OnIdiom Phone=3, Tablet=5}" 
-                                 HorizontalItemSpacing="{OnIdiom Phone=2, Tablet=10}" 
-                                 VerticalItemSpacing="{OnIdiom Phone=5, Tablet=15}" />
+                                 Span="{OnIdiom Phone=3, Tablet=5,  Default=4}" 
+                                 HorizontalItemSpacing="{OnIdiom Phone=2, Tablet=10, Default=7}" 
+                                 VerticalItemSpacing="{OnIdiom Phone=5, Tablet=15, Default=10}" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <ContentView Padding="{OnIdiom Phone=3, Tablet=8}"> 
+                    <ContentView Padding="{OnIdiom Phone=3, Tablet=8, Default=6}"> 
                         <Frame CornerRadius="10" 
                                HasShadow="False" 
                                BorderColor="#E0E0E0"
                                BackgroundColor="White"
                                Padding="0" 
                                IsClippedToBounds="True"
-                               HeightRequest="{OnIdiom Phone=290, Tablet=380}">
+                               HeightRequest="{OnIdiom Phone=290, Tablet=380, Default=350}">
                             
                             <Grid RowDefinitions="*, Auto">
                                 <Grid Grid.Row="0">
@@ -37,8 +37,8 @@
                                     
                                     <Image Source="watched.png" 
                                            IsVisible="{Binding IsWatched}"
-                                           WidthRequest="{OnIdiom Phone=24, Tablet=32}" 
-                                           HeightRequest="{OnIdiom Phone=24, Tablet=32}"
+                                           WidthRequest="{OnIdiom Phone=24, Tablet=32, Default=28}" 
+                                           HeightRequest="{OnIdiom Phone=24, Tablet=32, Default=28}"
                                            HorizontalOptions="End" 
                                            VerticalOptions="Start"
                                            Margin="8"
@@ -47,18 +47,18 @@
 
                                 <VerticalStackLayout Grid.Row="1" Padding="5" Spacing="2" BackgroundColor="White">
                                     <Label Text="{Binding Name}" 
-                                           FontSize="{OnIdiom Phone=13, Tablet=18}"
+                                           FontSize="{OnIdiom Phone=13, Tablet=18, Default=16}"
                                            FontAttributes="Bold"
                                            TextColor="Black"
                                            HorizontalTextAlignment="Center"
                                            MaxLines="2"
                                            LineBreakMode="TailTruncation"
-                                           HeightRequest="{OnIdiom Phone=40, Tablet=50}"
+                                           HeightRequest="{OnIdiom Phone=40, Tablet=50, Default=46}"
                                            VerticalTextAlignment="Center"/>
                     
                                     <Button Text="İncele"
-                                            FontSize="{OnIdiom Phone=11, Tablet=15}"
-                                            HeightRequest="{OnIdiom Phone=30, Tablet=40}" 
+                                            FontSize="{OnIdiom Phone=11, Tablet=15, Default=14}"
+                                            HeightRequest="{OnIdiom Phone=30, Tablet=40, Default=36}" 
                                             BackgroundColor="Transparent"
                                             TextColor="#6509b5"
                                             FontAttributes="Bold"
@@ -88,7 +88,7 @@
                Margin="20"
                Padding="20"
                IsVisible="False" 
-               WidthRequest="{OnIdiom Phone=320, Tablet=550}"
+               WidthRequest="{OnIdiom Phone=320, Tablet=550,Default=400}"
                VerticalOptions="Center"
                HorizontalOptions="Center"
                HasShadow="True"
@@ -98,29 +98,29 @@
             <VerticalStackLayout Spacing="15">
                 <Image x:Name="FilmPoster"
                        Aspect="AspectFill"
-                       HeightRequest="{OnIdiom Phone=220, Tablet=380}"
-                       WidthRequest="{OnIdiom Phone=140, Tablet=250}"
+                       HeightRequest="{OnIdiom Phone=220, Tablet=380, Default=330}"
+                       WidthRequest="{OnIdiom Phone=140, Tablet=250, Default=200}"
                        HorizontalOptions="Center"/>
                 
                 <Label x:Name="DetailName" 
-                       FontSize="{OnIdiom Phone=22, Tablet=34}" 
+                       FontSize="{OnIdiom Phone=22, Tablet=34, Default=30}" 
                        FontAttributes="Bold" 
                        HorizontalTextAlignment="Center"
                        TextColor="Black"/>
 
                 <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
-                    <Label x:Name="DetailMood" TextColor="Gray" FontSize="{OnIdiom Phone=12, Tablet=18}"/>
+                    <Label x:Name="DetailMood" TextColor="Gray" FontSize="{OnIdiom Phone=12, Tablet=18, Default=16}"/>
                     <Label Text="|" TextColor="LightGray"/>
-                    <Label x:Name="DetailTheme" TextColor="Gray" FontSize="{OnIdiom Phone=12, Tablet=18}"/>
+                    <Label x:Name="DetailTheme" TextColor="Gray" FontSize="{OnIdiom Phone=12, Tablet=18, Default=16}"/>
                     <Label Text="|" TextColor="LightGray"/>
-                    <Label x:Name="DetailTime" TextColor="Gray" FontSize="{OnIdiom Phone=12, Tablet=18}"/>
+                    <Label x:Name="DetailTime" TextColor="Gray" FontSize="{OnIdiom Phone=12, Tablet=18, Default=16}"/>
                 </HorizontalStackLayout>
                 
                 <HorizontalStackLayout Spacing="15" HorizontalOptions="Center" Margin="0,10">
-                    <Label Text="Bunu izledin mi?" VerticalOptions="Center" FontSize="{OnIdiom Phone=15, Tablet=22}"/>
+                    <Label Text="Bunu izledin mi?" VerticalOptions="Center" FontSize="{OnIdiom Phone=15, Tablet=22, Default=20}"/>
                     <ImageButton x:Name="WatchStatusBtn" 
-                                 HeightRequest="{OnIdiom Phone=35, Tablet=50}" 
-                                 WidthRequest="{OnIdiom Phone=35, Tablet=50}" 
+                                 HeightRequest="{OnIdiom Phone=35, Tablet=50, Default=45}" 
+                                 WidthRequest="{OnIdiom Phone=35, Tablet=50, Default=45}" 
                                  Source="unwatched.png" 
                                  Clicked="OnWatchStatusClicked"/>
                 </HorizontalStackLayout>
@@ -130,8 +130,8 @@
                         TextColor="White"
                         Clicked="OnCloseDetailClicked" 
                         CornerRadius="12"
-                        HeightRequest="{OnIdiom Phone=50, Tablet=70}"
-                        FontSize="{OnIdiom Phone=16, Tablet=22}"/>
+                        HeightRequest="{OnIdiom Phone=50, Tablet=70, Default=60}"
+                        FontSize="{OnIdiom Phone=16, Tablet=22, Default=20}"/>
             </VerticalStackLayout>
         </Frame>
     </Grid>
